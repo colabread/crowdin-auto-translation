@@ -1,0 +1,26 @@
+{
+  "name": "crowdin-auto-translation",
+  "version": "1.0.7",
+  "description": "automatic translating by crowdin and your specific config file",
+  "keywords": [
+    "crowdin",
+    "automatic translation"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "colabread",
+  "license": "ISC",
+  "dependencies": {
+    "@crowdin/crowdin-api-client": "^1.19.2",
+    "commander": "^9.4.1"
+  },
+  "bin": {
+    "catr": "./index.js"
+  },
+  "files": [
+    "src",
+    "index.js"
+  ]
+}
