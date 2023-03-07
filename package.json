@@ -1,6 +1,6 @@
 {
   "name": "crowdin-auto-translation",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "automatic translating by crowdin and your specific config file",
   "keywords": [
     "crowdin",
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@crowdin/crowdin-api-client": "^1.19.2",
+    "adm-zip": "^0.5.10",
     "commander": "^9.4.1"
   },
   "bin": {
