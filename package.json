@@ -1,6 +1,6 @@
 {
   "name": "crowdin-auto-translation",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "automatic translating by crowdin and your specific config file",
   "keywords": [
     "crowdin",
