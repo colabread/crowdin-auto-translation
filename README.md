@@ -46,7 +46,6 @@ CROWDIN_API_KEY=<your_crowdin_api_key>
     "name": "lang.json",
     "title": "lang"
   },
-  "directoryTitle": "webTest1",
   "directory": "web/test1",
   "sourceFilePath": "./lang_en.js",
   "outputPath": "./lang",
@@ -69,8 +68,7 @@ CROWDIN_API_KEY=<your_crowdin_api_key>
   - `title`：分支标题
 - `file`：要上传的文件对象，包含以下属性：
   - `name`：文件名 不需要加斜杠
-  - `title`：文件标题
-- `directoryTitle`：要在 Crowdin 项目中创建的目录标题 开头结尾不需要加斜杠
+  - `title`：文件标题 如果没有可以为空
 - `directory`：要在 Crowdin 项目中创建的目录路径
 - `sourceFilePath`：源文件路径
 - `outputPath`：输出文件路径

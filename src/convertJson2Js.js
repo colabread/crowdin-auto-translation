@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 
 const convert = (sourceFilePath, targetFilePath) => {
   let data = null;
@@ -7,16 +7,26 @@ const convert = (sourceFilePath, targetFilePath) => {
   } catch (err) {
     // console.error(err);
   }
-  data && fs.writeFileSync(targetFilePath, 'export default ' + data);
-}
+  data && fs.writeFileSync(targetFilePath, data);
+};
 
-const convertJson2Js = async (outputAbsolutePath, outputFilePrefix, targetLanguageIds, isOutputFullName) => {
-  targetLanguageIds.forEach(langName => {
-    const outputFileName = isOutputFullName ? langName : langName.split('-')[0];
-    const sourceFilePath = `${outputAbsolutePath}/translated/${langName}/lang.json`;
-    const targetFilePath = `${outputAbsolutePath}/${outputFilePrefix ? outputFilePrefix + '_' + outputFileName : outputFileName}.js`;
+const convertJson2Js = async (
+  directory,
+  outputAbsolutePath,
+  outputFilePrefix,
+  targetLanguageIds,
+  isOutputFullName
+) => {
+  targetLanguageIds.forEach((langName) => {
+    const outputFileName = isOutputFullName ? langName : langName.split("-")[0];
+    const sourceFilePath = `${outputAbsolutePath}/translated/${langName}/${directory}/lang.js`;
+    const targetFilePath = `${outputAbsolutePath}/${
+      outputFilePrefix
+        ? outputFilePrefix + "_" + outputFileName
+        : outputFileName
+    }.js`;
     convert(sourceFilePath, targetFilePath);
-  })
-}
+  });
+};
 
-module.exports = convertJson2Js
+module.exports = convertJson2Js;

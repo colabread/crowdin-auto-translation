@@ -150,7 +150,7 @@ module.exports = async (configPath) => {
     fileId = await getFileId(
       sourceFilesApi,
       projectId,
-      `/${branch.name}/${directory}/${file.name}`,
+      `/${branch.name}/${directory}/${file.name}.js`,
       branchId,
       directoryId
     );
@@ -159,11 +159,10 @@ module.exports = async (configPath) => {
     // 读取文件
     const sourceFile = fs.readFileSync(sourceFileAbsolutePath);
     const sourceStr = sourceFile.toString();
-    const begin = sourceStr.indexOf("{");
-    const end = sourceStr.lastIndexOf("}") + 1;
-    const jsonStr = sourceStr.substring(begin, end);
-    const lang = eval("(" + jsonStr + ")"); // JSON.parse无法解析不带双引号的json字符串，eval可以转换
-    const addStorageRes = await uploadStorageApi.addStorage(file.name, lang);
+    const addStorageRes = await uploadStorageApi.addStorage(
+      file.name,
+      sourceStr
+    );
     const storageId = addStorageRes.data.id;
 
     if (fileId === null) {
@@ -172,10 +171,10 @@ module.exports = async (configPath) => {
       const createFileRes = await sourceFilesApi.createFile(projectId, {
         branchId,
         directoryId,
-        name: file.name,
-        title: file.title,
+        name: `${file.name}.js`,
+        title: file.title || undefined,
         storageId: storageId,
-        type: "json",
+        type: "js",
       });
       fileId = createFileRes.data.id;
     } else {
@@ -241,8 +240,9 @@ module.exports = async (configPath) => {
     await unzip(outputAbsolutePath);
 
     // 将翻译文件从JSON转换为JS
-    console.log("convert json to js...");
+    console.log("convert js to js...");
     await convertJson2Js(
+      directory,
       outputAbsolutePath,
       outputFilePrefix,
       targetLanguageIds,
@@ -294,7 +294,6 @@ async function createDirectoriesRecursively(
 
       const directoryData = {
         name: pathPart,
-        title: pathPart,
       };
 
       if (parentDirectoryId) {
