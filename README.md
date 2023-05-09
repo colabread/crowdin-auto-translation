@@ -1,29 +1,3 @@
-# Crowdin 自动化翻译工具
-
-## 命令
-
-## 配置文件注释
-```
-{
-  "token": string, // crowdin账号凭证
-  "engineId": number, // crowdin翻译引擎id，可通过sdk或api查询
-  "projectId": number,  // crowdin项目id，可通过sdk或api查询
-  "targetLanguageIds": string[],  // 目标语言id数组，可通过sdk或api查询
-  "branch": {
-    "name": string,  // crowdin分支名
-    "title": string,  //  crowdin分支描述
-  },
-  "file": {
-    "name": string, // crowdin分支下的语言包源文件名，目前只支持json
-    "title": string,  // crowdin分支下的语言包源文件描述
-  },
-  "sourceFilePath": string, // 本地语言包源文件路径（相对于配置文件）
-  "outputPath": string, // 输出目录路径（相对于配置文件）
-  "outputFilePrefix": string, // 输出文件前缀，比如"lang" -> "lang_en.js"
-  "isOutputFullName": boolean,  // 输入文件名是否保持全名，false: es-ES -> es
-}
-```
-
 # Crowdin Auto-Translation
 
 Crowdin Auto-Translation 是一个使用 Crowdin API 自动翻译并上传项目文件的 Node.js 脚本。该脚本可帮助您轻松地将翻译后的文件上传到 Crowdin 项目。
@@ -40,7 +14,6 @@ Crowdin Auto-Translation 是一个使用 Crowdin API 自动翻译并上传项目
 
 1. 克隆此仓库
 2. 运行 `npm install` 安装依赖项
-3. 在项目中创建一个 `.env` 文件，其中包含您的 Crowdin API 密钥
 
 ```
 CROWDIN_API_KEY=<your_crowdin_api_key>
@@ -48,43 +21,66 @@ CROWDIN_API_KEY=<your_crowdin_api_key>
 
 ## 使用方法
 
-1. 在 `config.js` 文件中配置项目参数：
+1. 在 `config.json` 文件中配置项目参数：
 
-```javascript
-const config = {
-  projectId: <your_project_id>,
-  accessToken: process.env.CROWDIN_API_KEY,
-  sourceLanguage: 'en',
-  targetLanguages: ['zh-CN', 'es', 'de'],
-  branchName: 'auto-translated',
-  files: [
-    {
-      name: 'lang.json',
-      content: '{"hello": "Hello", "world": "World"}',
-    },
+```json
+{
+  "token": "Your Crowdin API 密钥",
+  "engineId": 328890,
+  "projectId": "your_project_id",
+  "targetLanguageIds": [
+    "fr",
+    "es-ES",
+    "de",
+    "ja",
+    "pt-PT",
+    "ru",
+    "id",
+    "zh-CN"
   ],
-  directoryPath: 'web/test1',
+  "branch": {
+    "name": "dingnan",
+    "title": "branch title"
+  },
+  "file": {
+    "name": "lang.json",
+    "title": "lang"
+  },
+  "directoryTitle": "webTest1",
+  "directory": "web/test1",
+  "sourceFilePath": "./lang_en.js",
+  "outputPath": "./lang",
+  "outputFilePrefix": "lang",
+  "isOutputFullName": false
 };
 ```
 
-2. 运行 `catr t [configPath]` 启动脚本
+1. 开发启动脚本 `node index.js t ./catr.config.json`
+2. 使用运行脚本 `catr t [configPath]`
 
 ## 参数说明
 
+- `token`：Crowdin API 密钥
+- `engineId`：翻译引擎 ID
 - `projectId`：Crowdin 项目的 ID
-- `accessToken`：Crowdin API 密钥（从 `.env` 文件获取）
-- `sourceLanguage`：源语言代码（例如 'en'）
-- `targetLanguages`：要翻译的目标语言代码数组（例如 `['zh-CN', 'es', 'de']`）
-- `branchName`：要创建的分支名称
-- `files`：要上传的文件数组，每个文件包含以下属性：
-  - `name`：文件名
-  - `content`：文件内容
-- `directoryPath`：在 Crowdin 项目中创建的目录路径
+- `targetLanguageIds`：要翻译的目标语言代码数组（例如 `["fr", "es-ES", "de", "ja", "pt-PT", "ru", "id", "zh-CN"]`）
+- `branch`：要创建的分支对象，包含以下属性：
+  - `name`：分支名称 不需要加斜杠
+  - `title`：分支标题
+- `file`：要上传的文件对象，包含以下属性：
+  - `name`：文件名 不需要加斜杠
+  - `title`：文件标题
+- `directoryTitle`：要在 Crowdin 项目中创建的目录标题 开头结尾不需要加斜杠
+- `directory`：要在 Crowdin 项目中创建的目录路径
+- `sourceFilePath`：源文件路径
+- `outputPath`：输出文件路径
+- `outputFilePrefix`：输出文件名前缀
+- `isOutputFullName`：是否输出完整文件名（布尔值）
 
 ## 注意事项
 
-请确保您在运行此脚本之前已经获取了有效的 Crowdin API 密钥，并将其保存在 `.env` 文件中。此外，请确保您的项目配置与实际需求相符。
+请确保您在运行此脚本之前已经获取了有效的 Crowdin API 密钥。此外，请确保您的项目配置与实际需求相符。
 
 ## 许可
 
-本项目使用 MIT 许可。
+本项目
