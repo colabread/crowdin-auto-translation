@@ -19,7 +19,12 @@ const convertJson2Js = async (
 ) => {
   targetLanguageIds.forEach((langName) => {
     const outputFileName = isOutputFullName ? langName : langName.split("-")[0];
-    const sourceFilePath = `${outputAbsolutePath}/translated/${langName}/${directory}/lang.js`;
+    let sourceFilePath = `${outputAbsolutePath}/translated/${langName}/${directory}/lang.js`;
+    if(!fs.existsSync(sourceFilePath)){
+      const noSrcDir = directory.replace(/\/src$/, '/lang');
+      sourceFilePath = `${outputAbsolutePath}/translated/${noSrcDir}/lang_${outputFileName}.js`;
+    }
+    
     const targetFilePath = `${outputAbsolutePath}/${
       outputFilePrefix
         ? outputFilePrefix + "_" + outputFileName
